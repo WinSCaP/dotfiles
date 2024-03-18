@@ -1,0 +1,49 @@
+# Zsh usefull options
+setopt nomatch autopushd
+
+# Bindkeys based on vi mode
+bindkey '^R' history-incremental-search-backward
+
+# Completions
+zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_DIR/zcompcache"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+unsetopt autocd beep notify
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/winscap/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+#
+
+# Aliasses
+alias l="exa -lh"
+alias ls="exa --icons -F -H --group-directories-first"
+alias la="exa -la"
+alias ll="exa -ll"
+alias cat="bat"
+alias grep="rg"
+
+export CARGO_HOME="$HOME/.cargo"
+export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$PATH"
+
+
+eval "$(starship init zsh)"
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
