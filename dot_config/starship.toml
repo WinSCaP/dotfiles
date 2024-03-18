@@ -1,6 +1,20 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$cmd_duration $jobs\
+$line_break\
+$character"""
+
+
 # Inserts a blank line between shell prompts
 add_newline = true
 right_format = "$time"
@@ -8,6 +22,37 @@ right_format = "$time"
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = '[✗](red) '
+vicmd_symbol = "[❮](green)"
+
+[fill]
+symbol = " "
+
+[directory]
+style = "blue"
+read_only = " "
+truncation_length = 4
+truncate_to_repo = false
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "bright-black"
+
+[git_status]
+format = '[$all_status]($style)'
+style = "fg:#1C3A5E bg:#FCF392"
+
+[git_metrics]
+format = "([+$added]($added_style))[]($added_style)"
+added_style = "fg:#1C3A5E bg:#FCF392"
+deleted_style = "fg:bright-red bg:235"
+disabled = false
+
+[hg_branch]
+format = "[ $symbol$branch ]($style)"
+symbol = " "
+
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -15,8 +60,10 @@ disabled = true
 
 [time]
 disabled = false
-format = '🕙[\[ $time \]]($style) '
+#format = '🕙[\[ $time \]]($style) '
 time_format = '%T'
+format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
+style = "bg:#1d2230"
 
 [shlvl]
 disabled = false
@@ -36,3 +83,25 @@ disabled = false
 format = "$symbol "
 symbols.Ubuntu = ""
 symbols.Windows = ""
+
+[jobs]
+symbol = ""
+style = "bold red"
+number_threshold = 1
+format = "[$symbol]($style)"
+
+[cmd_duration]
+format = "[  $duration ]($style)"
+style = "fg:bright-white bg:18"
+
+[memory_usage]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[custom.stunnel]
+when = "ps aux | grep stunnel | grep -v grep"
+command = "ps -o etime= -p $(ps aux | grep stunnel | grep -v grep | awk '{print $2}')"
+style = "red"
+format = "[TUNNEL OPEN for $output]($style)"
