@@ -154,11 +154,11 @@ number_threshold = 1
 format = "[$symbol]($style)"
 
 [cmd_duration]
-format = "[  $duration ]($style)"
+format = "[ $duration ]($style)"
 style = "fg:bright-white bg:18"
 
 [memory_usage]
-symbol = " "
+symbol = " 󰢑"
 
 [rust]
 symbol = " "
