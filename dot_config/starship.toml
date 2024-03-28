@@ -29,9 +29,9 @@ show_always = true
 [hostname]
 ssh_symbol = " "
 ssh_only=false
-{{- if eq .wsl true }}
-disabled=true
-{{- end }}
+#{{- if eq .wsl true }}
+#disabled=true
+#{{- end }}
 
 [env_var.WSL_DISTRO_NAME]
 disabled = false
