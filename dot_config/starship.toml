@@ -26,6 +26,19 @@ format = 'user: [$user]($style) '
 disabled = false
 show_always = true
 
+[hostname]
+ssh_symbol = " "
+ssh_only=false
+{{- if eq .wsl true }}
+disabled=true
+{{- end }}
+
+[env_var.WSL_DISTRO_NAME]
+disabled = false
+symbol = ""
+format = "using [$symbol $env_value]($style) "
+style = "bright-purple"
+
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
@@ -37,9 +50,13 @@ symbol = " "
 
 [directory]
 style = "blue"
-read_only = " "
+read_only = " 󰌾"
 truncation_length = 4
 truncate_to_repo = false
+
+[docker_context]
+symbol = " "
+
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch) ]($style)'
@@ -88,8 +105,47 @@ fish_indicator = "🐟"
 [os]
 disabled = false
 format = "$symbol "
-symbols.Ubuntu = ""
-symbols.Windows = ""
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
 
 [jobs]
 symbol = ""
@@ -107,8 +163,3 @@ symbol = " "
 [rust]
 symbol = " "
 
-[custom.stunnel]
-when = "ps aux | grep stunnel | grep -v grep"
-command = "ps -o etime= -p $(ps aux | grep stunnel | grep -v grep | awk '{print $2}')"
-style = "red"
-format = "[TUNNEL OPEN for $output]($style)"
