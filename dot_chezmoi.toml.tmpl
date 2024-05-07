@@ -1,9 +1,3 @@
-{{- $data := . }}
-{{- $email := get . "email" -}}
-{{- if not $email -}}
-{{-     $email = promptString "email" -}}
-{{- end -}}
-
 {{ if eq .chezmoi.os "windows" }}
 [edit]
     command = "code"
