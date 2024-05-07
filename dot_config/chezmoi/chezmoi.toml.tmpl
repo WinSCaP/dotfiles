@@ -1,0 +1,21 @@
+{{ if eq .chezmoi.os "windows" }}
+[edit]
+    command = "code"
+    args = ["--wait"]
+
+{{ else if eq .chezmoi.os "linux" }}
+
+
+{{ end }}
+
+[git]
+    autoCommit = true
+    autoPush = false
+
+{{- if eq .chezmoi.os "windows" }}
+[interpreters.ps1]
+    command = "pwsh"
+    arguments = ["-NoLogo"]
+[cd]
+    command = "pwsh"
+{{- end }}
