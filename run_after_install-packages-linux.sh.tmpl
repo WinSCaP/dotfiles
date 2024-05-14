@@ -1,0 +1,67 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+# This script relies on environment so don't rely on the shell to have the latest version
+{{- template "environment-config.sh.tmpl" . }}
+
+packages=(
+    ripgrep
+    bat
+    curl
+    jq
+    neovim
+    fzf
+    unzip
+    zsh
+)
+
+{{- if eq .wsl true }}
+packages+=(socat)
+{{- end }}
+
+{{- if (eq .chezmoi.osRelease.id "fedora") }}
+packages+=(
+	starship
+	exa
+	fd-find
+	zoxide
+	ShellCheck
+)
+sudo dnf install -y ${packages[@]}
+{{- end }}
+
+{{- if (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
+packages+=(
+	shellcheck
+)
+{{- end }}
+
+packages+=(
+    gpg
+    gpg-agent
+    fd-find
+    exa
+)
+
+sudo apt update
+sudo apt install \
+    --no-install-recommends \
+    --no-install-suggests \
+    -y \
+    ${packages[@]}
+
+# Starship
+sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
+
+
+
+{{ if eq .automation.update true -}}
+sudo apt upgrade -y
+{{- end }}
+
+{{- end -}}
+
+{{- end -}}
+{{/* vim: set filetype=bash: */}}
