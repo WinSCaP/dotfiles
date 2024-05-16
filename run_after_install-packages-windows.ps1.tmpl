@@ -32,8 +32,17 @@ if (-Not (Test-CommandExists "choco")) {
   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://community.chocolatey.org/install.ps1"))
 }
 
+$chocoPackages = @(
+    'ripgrep',
+    'cascadiafonts',
+    'dotnetfx',
+    'neovim',
+    'firacode',
+    'nerd-fonts-FiraCode'
+)
 Write-Host "Installing Chocolatey packages..."
-choco upgrade chocolatey
+choco upgrade chocolatey -y
+choco upgrade $chocoPackages -y
 
 Write-Host "Installing packages always used"
 choco upgrade vim --params "/NoDesktopShortcuts /NoContextmenu /NoDefaultVimrc"
@@ -53,4 +62,5 @@ code --install-extension firefox-devtools.vscode-firefox-debug
 code --install-extension ms-vscode-remote.remote-wsl
 code --install-extension ms-vscode.powershell
 code --install-extension usernamehw.errorlens
+code --install-extension Tim-Koehler.helm-intellisense
 
