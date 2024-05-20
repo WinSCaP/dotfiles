@@ -4,7 +4,7 @@
 set -eufo pipefail
 
 # This script relies on environment so don't rely on the shell to have the latest version
-{{- template "environment-config.sh.tmpl" . }}
+#{{- template "environment-config.sh.tmpl" . }}
 
 packages=(
     ripgrep
@@ -60,8 +60,6 @@ sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOM
 {{ if eq .automation.update true -}}
 sudo apt upgrade -y
 {{- end }}
-
-{{- end -}}
 
 {{- end -}}
 {{/* vim: set filetype=bash: */}}
