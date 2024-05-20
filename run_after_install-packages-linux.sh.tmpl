@@ -3,9 +3,6 @@
 
 set -eufo pipefail
 
-# This script relies on environment so don't rely on the shell to have the latest version
-#{{- template "environment-config.sh.tmpl" . }}
-
 packages=(
     ripgrep
     bat
@@ -17,26 +14,9 @@ packages=(
     zsh
 )
 
-{{- if eq .wsl true }}
-packages+=(socat)
-{{- end }}
-
-{{- if (eq .chezmoi.osRelease.id "fedora") }}
-packages+=(
-	starship
-	exa
-	fd-find
-	zoxide
-	ShellCheck
-)
-sudo dnf install -y ${packages[@]}
-{{- end }}
-
-{{- if (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
 packages+=(
 	shellcheck
 )
-{{- end }}
 
 packages+=(
     gpg
@@ -55,10 +35,6 @@ sudo apt install \
 # Starship
 sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
 
-
-
-{{- if eq .automation.update true }}
 sudo apt upgrade -y
-{{- end }}
 
 {{- end -}}
