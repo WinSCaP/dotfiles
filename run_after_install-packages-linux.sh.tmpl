@@ -57,9 +57,8 @@ sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOM
 
 
 
-{{ if eq .automation.update true -}}
+{{- if eq .automation.update true }}
 sudo apt upgrade -y
 {{- end }}
 
 {{- end -}}
-{{/* vim: set filetype=bash: */}}
