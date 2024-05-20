@@ -48,15 +48,15 @@ Write-Host "Installing packages always used"
 choco upgrade vim --params "/NoDesktopShortcuts /NoContextmenu /NoDefaultVimrc"
 choco upgrade openssh
 
-winget upgrade Git.Git
-winget upgrade Microsoft.WindowsTerminal
-winget upgrade Mozilla.Firefox
-winget upgrade Starship.Starship
-winget upgrade PuTTY.PuTTY
-winget upgrade Microsoft.PowerShell
-winget upgrade Microsoft.PowerToys
-winget upgrade Microsoft.VisualStudioCode
-winget upgrade Devolutions.RemoteDesktopManager
+winget upgrade Git.Git -y
+winget upgrade Microsoft.WindowsTerminal -y
+winget upgrade Mozilla.Firefox -y
+winget upgrade Starship.Starship -y
+winget upgrade PuTTY.PuTTY -y
+winget upgrade Microsoft.PowerShell -y
+winget upgrade Microsoft.PowerToys -y
+winget upgrade Microsoft.VisualStudioCode -y
+winget upgrade Devolutions.RemoteDesktopManager -y
 
 code --install-extension firefox-devtools.vscode-firefox-debug
 code --install-extension ms-vscode-remote.remote-wsl
