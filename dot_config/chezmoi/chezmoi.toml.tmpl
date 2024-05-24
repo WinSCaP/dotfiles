@@ -4,6 +4,9 @@
     args = ["--wait"]
 
 {{ else if eq .chezmoi.os "linux" }}
+[edit]
+    command = "code"
+    args = ["--wait"]
 
 
 {{ end }}
