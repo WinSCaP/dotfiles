@@ -5,8 +5,7 @@
 
 {{ else if eq .chezmoi.os "linux" }}
 [edit]
-    command = "code"
-    args = ["--wait"]
+    command = "nvim"
 
 
 {{ end }}
@@ -15,10 +14,17 @@
     autoCommit = true
     autoPush = false
 
-{{- if eq .chezmoi.os "windows" }}
+{{ if eq .chezmoi.os "windows" }}
 [interpreters.ps1]
     command = "pwsh"
     arguments = ["-NoLogo"]
 [cd]
     command = "pwsh"
-{{- end }}
+
+{{ else if eq .chezmoi.os "linux" }}
+[interpreters.ps1]
+    command = "pwsh"
+[cd]
+    command = "pwsh"
+{{ end }}
+
