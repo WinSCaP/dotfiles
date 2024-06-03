@@ -1,0 +1,7 @@
+[".local/share/mc/skins/dracula.ini"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula.ini"
+
+[".local/share/mc/skins/dracula256.ini"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula256.ini"
