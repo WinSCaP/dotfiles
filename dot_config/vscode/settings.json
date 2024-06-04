@@ -2,7 +2,7 @@
     "workbench.colorTheme": "Default Dark Modern",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "editor.fontFamily": "Fira Code",
+    "editor.fontFamily": "FiraCode Nerd Font Mono",
     "editor.fontLigatures": true,
     "telemetry.telemetryLevel": "off"
 }
