@@ -18,7 +18,7 @@ $ColorWarn = "DarkRed"
 # -----------------------------------------------------------------------------
 
 # Determine user profile parent directory.
-$ProfilePath=Split-Path -parent $profile
+$ProfilePath = Split-Path -parent $profile
 
 # Load functions declarations from separate configuration file.
 if (Test-Path $ProfilePath/functions.ps1) {
@@ -35,6 +35,7 @@ if (Test-Path $ProfilePath/extras.ps1) {
     . $ProfilePath/extras.ps1
 }
 
+$env:PATH += ";${env:userprofile}\.local\bin"
 
 Invoke-Expression (&starship init powershell)
 
