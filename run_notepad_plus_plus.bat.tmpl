@@ -1,0 +1,30 @@
+{{ if eq .chezmoi.os "windows" -}}
+:: -*-mode:bat-*- vim:ft=bat
+
+@echo off
+
+set SRCFILE=%USERPROFILE%\.config\notepad++\config.xml
+set DESTFILE=%APPDATA%\notepad++\config.xml
+
+:: Skip if application has not been installed.
+FOR %%A in (%DESTFILE%) do (
+    IF NOT EXIST %%~pA (
+        exit 0
+    )
+)
+
+:: Skip if destination is a symbolic link.
+dir %DESTFILE% | find "<SYMLINK>" > nul
+IF %errorlevel% == 0 (
+    exit 0
+)
+
+:: Skip if configuration files are identical.
+fc /b %SRCFILE% %DESTFILE% > nul
+IF %errorlevel% == 0 (
+    exit 0
+)
+
+:: Copy source file to destination.
+xcopy /fvy %SRCFILE% %DESTFILE%*
+{{- end }}

@@ -38,7 +38,7 @@
         "defaults": {
             "colorScheme": "Dracula",
             "font": {
-                "face": "Fira Code",
+                "face": "FiraCode Nerd Font Mono",
                 "size": 14,
                 "weight": "normal",
                 "features": {
