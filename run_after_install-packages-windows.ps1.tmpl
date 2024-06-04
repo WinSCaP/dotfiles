@@ -1,5 +1,3 @@
-{{ if eq .chezmoi.os "windows" -}}
-
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
   if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
@@ -38,7 +36,6 @@ $chocoPackages = @(
     'ripgrep',
     'cascadiafonts',
     'dotnetfx',
-    'vcredist140',
     'neovim',
     'firacode',
     'nerd-fonts-FiraCode'
@@ -48,24 +45,24 @@ choco upgrade chocolatey -y
 choco upgrade $chocoPackages -y
 
 Write-Host "Installing packages always used"
-choco upgrade vim --params "/NoDesktopShortcuts /NoContextmenu /NoDefaultVimrc"
-choco upgrade openssh
+choco upgrade -y vim --params "/NoDesktopShortcuts /NoContextmenu /NoDefaultVimrc"
+choco upgrade -y openssh
 
-winget upgrade Git.Git -y
-winget upgrade Microsoft.WindowsTerminal -y
-winget upgrade Mozilla.Firefox -y
-winget upgrade Starship.Starship -y
-winget upgrade PuTTY.PuTTY -y
-winget upgrade Microsoft.PowerShell -y
-winget upgrade Microsoft.PowerToys -y
-winget upgrade Microsoft.VisualStudioCode -y
-winget upgrade Devolutions.RemoteDesktopManager -y
+winget upgrade Git.Git
+winget upgrade Microsoft.WindowsTerminal
+winget upgrade Mozilla.Firefox
+winget upgrade Starship.Starship
+winget upgrade PuTTY.PuTTY
+winget upgrade Microsoft.PowerShell
+winget upgrade Microsoft.PowerToys
+winget upgrade Microsoft.VisualStudioCode
+winget upgrade Devolutions.RemoteDesktopManager
 
 code --install-extension firefox-devtools.vscode-firefox-debug
 code --install-extension ms-vscode-remote.remote-wsl
 code --install-extension ms-vscode.powershell
 code --install-extension usernamehw.errorlens
 code --install-extension Tim-Koehler.helm-intellisense
+code --install-extension dracula-theme.theme-dracula
 
-{{- end }}
-
+exit 0
