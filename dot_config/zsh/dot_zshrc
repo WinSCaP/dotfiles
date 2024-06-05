@@ -46,5 +46,4 @@ export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$PATH"
 
 source <(kubectl completion zsh)
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.config/zsh/dracula.zsh-theme 
 eval "$(starship init zsh)"
