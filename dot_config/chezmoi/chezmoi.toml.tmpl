@@ -6,9 +6,16 @@
 {{ else if eq .chezmoi.os "linux" }}
 [edit]
     command = "nvim"
-
-
 {{ end }}
+
+{{- $personal := false -}}
+{{- $work := false -}}
+{{- $isWsl := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-    if .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+{{-       $isWsl = true -}}
+{{-    end -}}
+{{- end -}}
 
 [git]
     autoCommit = true
@@ -27,4 +34,3 @@
 [cd]
     command = "pwsh"
 {{ end }}
-

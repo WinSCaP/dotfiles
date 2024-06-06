@@ -1,7 +1,26 @@
 [".local/share/mc/skins/dracula.ini"]
   type = "file"
   url = "https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula.ini"
+  refreshPeriod = "168h"
 
 [".local/share/mc/skins/dracula256.ini"]
   type = "file"
   url = "https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula256.ini"
+  refreshPeriod = "168h"
+
+[".local/share/vim/bundle/Vundle.vim"]
+    type = "git-repo"
+    url = "https://github.com/VundleVim/Vundle.vim.git"
+    refreshPeriod = "168h"
+
+{{- if not (eq .chezmoi.os "darwin") }}
+[".local/bin/argocd"]
+    type = "file"
+{{-   if eq .chezmoi.os "windows" }}
+    url = "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-windows-{{ .chezmoi.arch }}.exe"
+{{-   else }}
+    url = "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+{{-   end }}
+    executable = true
+    refreshPeriod = "168h"
+{{- end }}

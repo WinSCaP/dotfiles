@@ -1,0 +1,21 @@
+# Path as an array for readability
+path=(
+{{- if eq .wsl true }}
+    # WSL Tooling support
+    "/mnt/c/Program Files/Microsoft VS Code/bin"
+{{- end }}
+
+    # Defaults you always want
+    "$XDG_DATA_HOME/bin"
+    "$HOME/.local/bin"
+    "/usr/local/sbin"
+    "/usr/local/bin"
+    "/usr/bin"
+    "/bin"
+    "/usr/sbin"
+    "/sbin"
+)
+
+typeset -U path
+
+export PATH=$(IFS=":"; echo "${path[*]}")
