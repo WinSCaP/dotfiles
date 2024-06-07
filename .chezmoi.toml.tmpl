@@ -1,0 +1,14 @@
+
+[edit]
+    command = "nvim"
+[git]
+    autoCommit = true
+    autoPush = false
+
+
+[interpreters.ps1]
+    command = "pwsh"
+{{ if eq .chezmoi.os "windows" }}
+[cd]
+    command = "pwsh"
+{{ end }}
