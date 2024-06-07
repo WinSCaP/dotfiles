@@ -46,10 +46,6 @@ export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$PATH"
 
 source <(kubectl completion zsh)
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-<<<<<<< HEAD
-=======
-source ~/.config/zsh/dracula.zsh-theme 
-
 
 #### ------------------------------
 
@@ -75,5 +71,4 @@ tw=35:\
 tx=36:"
 
 
->>>>>>> d2f8f51 (Update .config/zsh/.zshrc)
 eval "$(starship init zsh)"
