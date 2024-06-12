@@ -1,5 +1,10 @@
 # Path as an array for readability
 path=(
+
+{{- if eq .toolchains.rust true }}
+    "$CARGO_HOME/bin"
+{{- end }}
+
 {{- if eq .wsl true }}
     # WSL Tooling support
     "/mnt/c/Program Files/Microsoft VS Code/bin"
@@ -15,6 +20,7 @@ path=(
     "/usr/sbin"
     "/sbin"
 )
+
 
 typeset -U path
 

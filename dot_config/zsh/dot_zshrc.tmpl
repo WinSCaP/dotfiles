@@ -1,6 +1,9 @@
 # Zsh usefull options
 setopt nomatch autopushd
 
+source $XDG_CACHE_HOME/zsh/fzf-zsh-completion.sh
+bindkey '^I' fzf_completion
+
 # Bindkeys based on vi mode
 bindkey '^R' history-incremental-search-backward
 
@@ -15,7 +18,7 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-
+zstyle ':completion:*' fzf-search-display true
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile

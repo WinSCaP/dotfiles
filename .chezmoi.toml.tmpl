@@ -1,10 +1,46 @@
+{{- $data := . }}
+
+{{- $_ := set $data "toolchains" (default (dict) (get $data "toolchains")) -}}
+
+
+{{- $toolchains := list "php" "rust" }}
+{{- $personal := true -}}
+
+{{- $isWsl := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-    if .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+{{-       $isWsl = true -}}
+{{-    end -}}
+{{- end -}}
+
+{{- range $toolchains }}
+    {{- if not (hasKey $data.toolchains .) }}
+        {{- $_ := set $data.toolchains . (promptBool .) }}
+    {{- end }}
+    {{ . }} = {{ get $data.toolchains . }}
+{{- end }}
+
+[data]
+    personal = {{ $personal }}
+    wsl = {{ $isWsl }}
+
+[data.toolchains]
+{{- range $toolchains }}
+    {{- if not (hasKey $data.toolchains .) }}
+        {{- $_ := set $data.toolchains . (promptBool .) }}
+    {{- end }}
+    {{ . }} = {{ get $data.toolchains . }}
+{{- end }}
+
+[data.automation]
+    update = false
+
 
 [edit]
     command = "nvim"
 [git]
     autoCommit = true
     autoPush = false
-
 
 [interpreters.ps1]
     command = "pwsh"
