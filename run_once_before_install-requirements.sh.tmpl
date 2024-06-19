@@ -39,19 +39,19 @@ packages=(
         fd-find
         ShellCheck
     )
-{{- elif (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
+{{- else if (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
     # Debian-based adjustments
     packages+=(
         fd-find
         shellcheck
     )
-{{- elif (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
+{{- else if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
     # OpenSUSE Tumbleweed-specific adjustments
     packages+=(
         fd
         ShellCheck
     )
-{{- elif (eq .chezmoi.osRelease.id "arch") }}
+{{- else if (eq .chezmoi.osRelease.id "arch") }}
     # Arch Linux-specific adjustments
     packages+=(
         fd
