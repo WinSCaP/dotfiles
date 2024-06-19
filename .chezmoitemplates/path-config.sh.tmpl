@@ -1,14 +1,10 @@
 # Path as an array for readability
 path=(
 
-{{- if eq .toolchains.rust true }}
     "$CARGO_HOME/bin"
-{{- end }}
 
-{{- if eq .wsl true }}
     # WSL Tooling support
-    "/mnt/c/Program Files/Microsoft VS Code/bin"
-{{- end }}
+    #"/mnt/c/Program Files/Microsoft VS Code/bin"
 
     # Defaults you always want
     "$XDG_DATA_HOME/bin"

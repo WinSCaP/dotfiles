@@ -33,7 +33,7 @@
 {{- end }}
 
 [data.automation]
-    update = false
+    update = true
 
 
 [edit]
@@ -42,9 +42,9 @@
     autoCommit = true
     autoPush = false
 
+{{ if eq .chezmoi.os "windows" }}
 [interpreters.ps1]
     command = "pwsh"
-{{ if eq .chezmoi.os "windows" }}
 [cd]
     command = "pwsh"
 {{ end }}

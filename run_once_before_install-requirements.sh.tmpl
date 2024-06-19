@@ -1,0 +1,111 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+# Define XDG folders
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# Add XDG folders to bash and zsh configuration
+echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> "$HOME/.bashrc"
+echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> "$HOME/.bashrc"
+echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> "$HOME/.bashrc"
+
+echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> "$HOME/.zshrc"
+echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> "$HOME/.zshrc"
+echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> "$HOME/.zshrc"
+
+# Initialize package list
+packages=(
+    ripgrep
+    bat
+    curl
+    jq
+    neovim
+    fzf
+    unzip
+    zsh
+    gnupg
+    gpg-agent
+    exa
+)
+
+# Adjust package names for specific distributions
+{{- if (eq .chezmoi.osRelease.id "fedora") }}
+    # Fedora-specific adjustments
+    packages+=(
+        fd-find
+        ShellCheck
+    )
+{{- elif (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
+    # Debian-based adjustments
+    packages+=(
+        fd-find
+        shellcheck
+    )
+{{- elif (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
+    # OpenSUSE Tumbleweed-specific adjustments
+    packages+=(
+        fd
+        ShellCheck
+    )
+{{- elif (eq .chezmoi.osRelease.id "arch") }}
+    # Arch Linux-specific adjustments
+    packages+=(
+        fd
+        shellcheck
+    )
+{{- end }}
+
+# Install packages using the appropriate package manager
+if command -v dnf &>/dev/null; then
+    # Fedora
+    sudo dnf install -y "${packages[@]}"
+elif command -v apt-get &>/dev/null; then
+    # Debian-based
+    sudo apt-get update
+    sudo apt-get install -y "${packages[@]}"
+elif command -v zypper &>/dev/null; then
+    # OpenSUSE Tumbleweed
+    sudo zypper install -y "${packages[@]}"
+elif command -v pacman &>/dev/null; then
+    # Arch Linux
+    sudo pacman -Syu --noconfirm "${packages[@]}"
+else
+    echo "Unsupported package manager. Install the packages manually."
+    exit 1
+fi
+
+sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
+
+{{- if not (eq .chezmoi.os "darwin") }}
+echo "Setting user shell if needed..."
+zshloc="$(which zsh)"
+if [ "$SHELL" != "$zshloc" ]; then
+    chsh -s "$zshloc"
+    echo Done
+fi
+{{- end }}
+
+# Upgrade packages if automation.update is true
+{{ if eq .automation.update true }}
+if command -v dnf &>/dev/null; then
+    sudo dnf upgrade -y
+elif command -v apt-get &>/dev/null; then
+    sudo apt-get update
+    sudo apt-get upgrade -y
+elif command -v zypper &>/dev/null; then
+    sudo zypper up -y
+    sudo zypper dup -y
+elif command -v pacman &>/dev/null; then
+    sudo pacman -Syu --noconfirm
+else
+    echo "Unsupported package manager. Update the packages manually."
+fi
+{{- end }}
+
+echo "XDG folders and packages are set up successfully."
+
+{{- end -}}
