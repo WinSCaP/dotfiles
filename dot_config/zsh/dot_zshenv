@@ -1,7 +1,0 @@
-export XDG_CONFIG_HOME="$HOME/.config"
-export ZDOTDIR="$HOME/.config/zsh"
-
-export EDITOR="/usr/bin/vim"
-export VISUAL="/usr/bin/vim"
-
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"

@@ -3,38 +3,28 @@
 
 set -eufo pipefail
 
-packages=(
-    ripgrep
-    bat
-    curl
-    jq
-    neovim
-    fzf
-    unzip
-    zsh
-)
 
-packages+=(
-	shellcheck
-)
+# Upgrade packages if automation.update is true
+{{ if eq .automation.update true }}
+if command -v dnf &>/dev/null; then
+    sudo dnf upgrade -y
+elif command -v apt-get &>/dev/null; then
+    sudo apt-get update
+    sudo apt-get upgrade -y
+elif command -v zypper &>/dev/null; then
+    sudo zypper refresh
+    sudo zypper up -y
+    sudo zypper dup -y
+elif command -v pacman &>/dev/null; then
+    sudo pacman -Syu --noconfirm
+else
+    echo "Unsupported package manager. Update the packages manually."
+fi
+{{- end }}
 
-packages+=(
-    gpg
-    gpg-agent
-    fd-find
-    exa
-)
-
-sudo apt update
-sudo apt install \
-    --no-install-recommends \
-    --no-install-suggests \
-    -y \
-    ${packages[@]}
 
 # Starship
 sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
 
-sudo apt upgrade -y
 
 {{- end -}}
