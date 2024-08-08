@@ -8,6 +8,11 @@
   url = "https://raw.githubusercontent.com/dracula/midnight-commander/master/skins/dracula256.ini"
   refreshPeriod = "168h"
 
+[".local/share/konsole/Dracula.colorscheme"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/dracula/konsole/master/Dracula.colorscheme"
+  refreshPeriod = "312h"
+
 [".local/share/vim/bundle/Vundle.vim"]
     type = "git-repo"
     url = "https://github.com/VundleVim/Vundle.vim.git"
