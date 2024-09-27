@@ -8,15 +8,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-# Add XDG folders to bash and zsh configuration
-echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> "$HOME/.bashrc"
-echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> "$HOME/.bashrc"
-echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> "$HOME/.bashrc"
-
-echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> "$HOME/.zshrc"
-echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> "$HOME/.zshrc"
-echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> "$HOME/.zshrc"
-
 sudo sh -c "echo 'export ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh' >> /etc/zshenv"
 
 
