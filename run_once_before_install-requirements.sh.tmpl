@@ -17,7 +17,8 @@ echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> "$HOME/.zshrc"
 echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> "$HOME/.zshrc"
 echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> "$HOME/.zshrc"
 
-echo 'export ZDOTDIR="$XDG_CONFIG_HOME"/zsh' >> /etc/zshenv
+sudo sh -c "echo 'export ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh' >> /etc/zshenv"
+
 
 # Initialize package list
 packages=(
