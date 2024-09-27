@@ -77,6 +77,11 @@ elif command -v apt-get &>/dev/null; then
 elif command -v zypper &>/dev/null; then
     # OpenSUSE Tumbleweed
     sudo zypper install -y "${packages[@]}"
+    sudo opi codecs -n
+    sudo opi dotnet -n
+    sudo opi msedge -n
+    sudo opi vscode -n
+    sudo opi nerd-fonts-firacode -n
 elif command -v pacman &>/dev/null; then
     # Arch Linux
     sudo pacman -Syu --noconfirm "${packages[@]}"
@@ -107,13 +112,6 @@ elif command -v zypper &>/dev/null; then
     sudo zypper refresh
     sudo zypper up -y
     sudo zypper dup -y
-    sudo opi codecs -n
-    sudo opi dotnet -n
-    sudo opi teams-for-linux -n
-    sudo opi msedge -n
-    sudo opi spotify -n
-    sudo opi vscode -n
-    sudo opi nerd-fonts-firacode -n
 elif command -v pacman &>/dev/null; then
     sudo pacman -Syu --noconfirm
 else
