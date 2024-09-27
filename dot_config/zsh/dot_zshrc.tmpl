@@ -1,3 +1,7 @@
+# Fix for unreliable profile sourcing, eg. switching to a second TTY
+if [[ -z "$PROFILE_SOURCED" ]]; then
+    source ~/.profile
+fi
 # Zsh usefull options
 setopt nomatch autopushd
 
