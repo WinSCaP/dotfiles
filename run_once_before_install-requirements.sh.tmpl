@@ -106,6 +106,12 @@ elif command -v zypper &>/dev/null; then
     sudo zypper refresh
     sudo zypper up -y
     sudo zypper dup -y
+    sudo opi codecs
+    sudo opi dotnet
+    sudo opi teams-for-linux
+    sudo opi msedge
+    sudo opi spotify
+    sudo opi vscode
 elif command -v pacman &>/dev/null; then
     sudo pacman -Syu --noconfirm
 else
