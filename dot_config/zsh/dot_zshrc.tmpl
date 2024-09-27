@@ -21,7 +21,7 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*' fzf-search-display true
 
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
