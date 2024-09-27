@@ -29,6 +29,7 @@ packages=(
     zsh
     gnupg
     exa
+    git
 )
 
 # Adjust package names for specific distributions
@@ -51,6 +52,7 @@ packages=(
         ShellCheck
         fira-code-fonts
         freerdp
+        opi
     )
 {{- else if (eq .chezmoi.osRelease.id "arch") }}
     # Arch Linux-specific adjustments
