@@ -75,8 +75,8 @@ if command -v dnf &>/dev/null; then
     sudo dnf install -y "${packages[@]}"
     sudo dnf swap -y 'ffmpeg-free' 'ffmpeg' --allowerasing # Switch to full FFMPEG.
     sudo dnf group -y install Multimedia
-    sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin # Installs gstreamer components. Required if you use Gnome Videos and other dependent applications.
-    sudo dnf update -y @sound-and-video # Installs useful Sound and Video complement packages.    
+    # sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin # Installs gstreamer components. Required if you use Gnome Videos and other dependent applications.
+    # sudo dnf update -y @sound-and-video # Installs useful Sound and Video complement packages.    
     sudo dnf group -y install --with-optional virtualization
 sudo systemctl start libvirtd
 sudo systemctl enable libvirtd
