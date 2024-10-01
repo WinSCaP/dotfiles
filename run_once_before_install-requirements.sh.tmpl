@@ -33,6 +33,9 @@ packages=(
     packages+=(
         fd-find
         ShellCheck
+        nextcloud-client
+        thunderbird
+        vlc
     )
 {{- else if (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
     # Debian-based adjustments
@@ -62,7 +65,28 @@ packages=(
 # Install packages using the appropriate package manager
 if command -v dnf &>/dev/null; then
     # Fedora
+    sudo bash -c "echo max_parallel_downloads=10 >> /etc/dnf/dnf.conf"
+    sudo bash -c "echo fastestmirror=true >> /etc/dnf/dnf.conf"
+    sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf group update core -y
+    sudo dnf update -y
     sudo dnf install -y "${packages[@]}"
+    sudo dnf swap -y 'ffmpeg-free' 'ffmpeg' --allowerasing # Switch to full FFMPEG.
+    sudo dnf group -y install Multimedia
+    sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin # Installs gstreamer components. Required if you use Gnome Videos and other dependent applications.
+    sudo dnf update -y @sound-and-video # Installs useful Sound and Video complement packages.    
+    # sudo dnf install -y akmod-nvidia
+    # sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld
+    # sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+    sudo dnf install -y unzip p7zip p7zip-plugins unrar
+    #sudo fwupdmgr refresh --force
+    #sudo fwupdmgr get-devices # Lists devices with available updates.
+    #sudo fwupdmgr get-updates # Fetches list of available updates.
+    #sudo fwupdmgr update
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    # sudo hostnamectl set-hostname $sethostname 
 elif command -v apt-get &>/dev/null; then
     # Debian-based
     sudo apt-get update
