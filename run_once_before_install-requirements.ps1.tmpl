@@ -1,4 +1,43 @@
 {{- if (eq .chezmoi.os "windows") -}}
+
+Remove-Item -Recurse -Force {{ .chezmoi.sourcedir }}\dot_local
+Remove-Item -Recurse -Force {{ .chezmoi.sourcedir }}\inc
+Remove-Item -Recurse -Force {{ .chezmoi.sourcedir }}\kdedefaults
+
+# Self-elevate the script if required
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
+    $CommandLine = "-ExecutionPolicy Bypass -NoExit -File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    Start-Process -FilePath PowerShell.exe -Verb RunAs -ArgumentList $CommandLine -Wait
+    Exit
+  }
+}
+Function Test-CommandExists {
+  Param ($command)
+
+  $oldPreference = $ErrorActionPreference
+  $ErrorActionPreference = "stop"
+
+  try {
+    if (Get-Command $command) {
+      return $true
+    }
+  }
+  Catch {
+    return $false
+  }
+  Finally {
+    $ErrorActionPreference = $oldPreference
+  }
+}
+
+# Install Chocolatey if it is not already installed
+if (-Not (Test-CommandExists "choco")) {
+  Set-ExecutionPolicy Bypass -Scope Process -Force
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://community.chocolatey.org/install.ps1"))
+}
+
 winget install Microsoft.Powershell
 winget install Git.Git
 winget install Microsoft.WindowsTerminal
@@ -9,5 +48,7 @@ winget install Microsoft.PowerShell
 winget install Microsoft.PowerToys
 winget install Microsoft.VisualStudioCode
 winget install Devolutions.RemoteDesktopManager
-winget install VLC.VLC
+winget install VideoLAN.VLC
+winget install Notepad++.Notepad++
+winget install Mattermost.MattermostDesktop
 {{- end -}}
