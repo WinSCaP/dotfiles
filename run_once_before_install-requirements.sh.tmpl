@@ -27,6 +27,11 @@ packages=(
     mc
 )
 
+{{- if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
+    echo "Welcome to OpenSuse again, did you enable the community repositories via: Yast > Repositories?
+    read -p "Press enter to continue"
+{{- end }}
+
 # Adjust package names for specific distributions
 {{- if (eq .chezmoi.osRelease.id "fedora") }}
     # Fedora-specific adjustments
@@ -64,7 +69,7 @@ packages=(
 {{- end }}
 
 # Install packages using the appropriate package manager
-if command -v dnf &>/dev/null; then
+{{- if (eq .chezmoi.osRelease.id "fedora") }}
     # Fedora
     sudo bash -c "echo max_parallel_downloads=10 >> /etc/dnf/dnf.conf"
     sudo bash -c "echo fastestmirror=true >> /etc/dnf/dnf.conf"
@@ -80,8 +85,8 @@ if command -v dnf &>/dev/null; then
     sudo dnf install -y gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugin-openh264 libavcodec-freeworld libheif-freeworld
     sudo dnf swap -y libavcodec-free libavcodec-freeworld 
     sudo dnf group -y install --with-optional virtualization
-sudo systemctl start libvirtd
-sudo systemctl enable libvirtd
+    sudo systemctl start libvirtd
+    sudo systemctl enable libvirtd
     # sudo dnf install -y akmod-nvidia
     # sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld
     # sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
@@ -93,11 +98,11 @@ sudo systemctl enable libvirtd
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     # sudo hostnamectl set-hostname $sethostname 
-elif command -v apt-get &>/dev/null; then
+{{- else if (eq .chezmoi.osRelease.id "debian" "ubuntu") }}
     # Debian-based
     sudo apt-get update
     sudo apt-get install -y "${packages[@]}"
-elif command -v zypper &>/dev/null; then
+{{- else if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
     # OpenSUSE Tumbleweed
     sudo zypper install -y "${packages[@]}"
     sudo opi codecs -n
@@ -105,13 +110,14 @@ elif command -v zypper &>/dev/null; then
     sudo opi msedge -n
     sudo opi vscode -n
     sudo opi nerd-fonts-firacode -n
-elif command -v pacman &>/dev/null; then
+{{- else if (eq .chezmoi.osRelease.id "arch") }}
     # Arch Linux
     sudo pacman -Syu --noconfirm "${packages[@]}"
-else
+{{- else }}
     echo "Unsupported package manager. Install the packages manually."
     exit 1
-fi
+{{- end }}
+
 
 mkdir "$HOME/.local/bin"
 sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
@@ -127,15 +133,15 @@ fi
 
 # Upgrade packages if automation.update is true
 {{ if eq .automation.update true }}
-if command -v dnf &>/dev/null; then
+if command -v zypper &>/dev/null; then
+    sudo zypper refresh
+    sudo zypper up -y
+    sudo zypper dup -y
+elif command -v dnf &>/dev/null; then
     sudo dnf upgrade -y
 elif command -v apt-get &>/dev/null; then
     sudo apt-get update
     sudo apt-get upgrade -y
-elif command -v zypper &>/dev/null; then
-    sudo zypper refresh
-    sudo zypper up -y
-    sudo zypper dup -y
 elif command -v pacman &>/dev/null; then
     sudo pacman -Syu --noconfirm
 else
