@@ -28,7 +28,7 @@ packages=(
 )
 
 {{- if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
-    echo "Welcome to OpenSuse again, did you enable the community repositories via: Yast > Repositories?
+    echo "Welcome to OpenSuse again, did you enable the community repositories via: Yast > Repositories?"
     read -p "Press enter to continue"
 {{- end }}
 
