@@ -119,7 +119,7 @@ packages=(
 {{- end }}
 
 
-mkdir "$HOME/.local/bin"
+mkdir -p "$HOME/.local/bin"
 sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
 
 {{- if not (eq .chezmoi.os "darwin") }}
