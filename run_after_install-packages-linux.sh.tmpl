@@ -32,5 +32,9 @@ xdg-settings set default-web-browser firefox.desktop
 {{- if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
     xdg-settings set default-web-browser firefox.desktop
 {{- end }}
+sudo cp ~/.config/plasma-localerc /etc/locale.conf
+sudo sed -i -e "1d" /etc/locale.conf
+
+echo "A reboot would be a good idea"
 
 {{- end -}}
