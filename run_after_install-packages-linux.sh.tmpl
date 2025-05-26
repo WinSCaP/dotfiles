@@ -26,5 +26,11 @@ fi
 # Starship
 sh -c "$(curl -fsSL https://starship.rs/install.sh | head -n -5)" -- -y -b "$HOME/.local/bin"
 
+xdg-settings set default-web-browser firefox.desktop    
+
+# HOW DARE YOU, HOW DARE YOU!
+{{- if (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
+    xdg-settings set default-web-browser firefox.desktop
+{{- end }}
 
 {{- end -}}
